@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+// import Sidebar from './components/Sidebar';
+import Home from './components/Home';
+import About from './components/About';
+import Qualification from './components/Qualification';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
+import Services from './components/Services';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+
+
+const AppContainer = styled.div`
+  display: flex;
+`;
+
+const ContentContainer = styled.div`
+  flex: 1;
+`;
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      {/* <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} /> */}
+      <ContentContainer>
+        {/* Your content components go here */}
+        <Navbar />
+        <Home />
+        <About />
+        <Qualification />
+        <Skills />
+        <Projects />
+        <Services />
+        <Contact />
+        <Footer />
+      </ContentContainer>
+    </AppContainer>
   );
 }
 
