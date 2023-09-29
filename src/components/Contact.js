@@ -118,10 +118,10 @@ const SubmitButton = styled.button`
 const Contact = () => {
 
   const [user, setUser] = useState({
-    name:"",
-    email:"",
-    subject:"",
-    message:""
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
   
   let name, value;
@@ -130,6 +130,45 @@ const Contact = () => {
     value = event.target.value;
 
     setUser({...user, [name]: value});
+  };
+
+  const postData = async (e) => {
+    e.preventDefault();
+
+    const {name,email,subject,message} = user;
+
+    if(name && email && subject && message) {
+
+      const res = await fetch("https://reactpage-ca865-default-rtdb.firebaseio.com/contactform.json",
+      {
+       method:"POST",
+       headers: {
+         "Content-Type":"application/json",
+       },
+       body:JSON.stringify({
+         name,
+         email,
+         subject,
+         message,
+       })
+      });
+   
+      if(res){
+       setUser({
+         name: "",
+         email: "",
+         subject: "",
+         message: "",
+       });
+   
+       alert("Thank's for contacting me")
+      }
+
+    }else{
+      alert("Plz fill all the data")
+    }
+
+  
   };
 
   return (
@@ -170,7 +209,7 @@ const Contact = () => {
           </Column>
           <Column>
             <Text>Message Me</Text>
-            <ContactForm>
+            <ContactForm method='POST'>
               <Fields>
                 <Field>
                   <Input type="text" name='name' placeholder="Name" value={user.name} onChange={getUserdata} autoComplete='off' required />
@@ -193,7 +232,7 @@ const Contact = () => {
                 ></TextArea>
               </Field>
               <ButtonArea>
-                <SubmitButton type="submit">Send Message</SubmitButton>
+                <SubmitButton type="submit" onClick={postData}>Send Message</SubmitButton>
               </ButtonArea>
             </ContactForm>
           </Column>
